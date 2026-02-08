@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>4D Interactive GPS Star</title>
+    <style>
+      body {
+        margin: 0;
+        height: 100vh;
+        background-color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        perspective: 1000px;
+        overflow: hidden;
+        color: white;
+        font-family: Arial, sans-serif;
+        cursor: crosshair;
+      }
+
+      h1 {
+        position: absolute;
+        top: 20px;
+        color: blue;
+        letter-spacing: 2px;
+      }
+
+      #container {
+        width: 90vw;
+        height: 50vw;
+        max-width: 700px;
+        max-height: 600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-style: preserve-3d;
+        overflow: visible;
+      }
+
+      .star {
+        width: 80vw; /* scales with screen */
+        max-width: 600px;
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 0 30px yellow);
+        animation: twinkle 1.5s infinite alternate;
+        cursor: pointer;
+      }
+
+      @keyframes twinkle {
+        0% { opacity: 0.7; }
+        50% { opacity: 1; transform: scale(1.05); }
+        100% { opacity: 0.8; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Global.Protection.Satellite</h1>
+
+    <div id="container">
+      <img
+        src="https://i.imghippo.com/files/qjS8602rw.png"
+        class="star"
+        id="star"
+        alt="GPS Star"
+      >
+    </div>
+
+    <script>
+      const star = document.getElementById("star");
+
+      // User-controlled 3D rotation + depth (scale)
+      document.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 180;
+        const y = (e.clientY / window.innerHeight - 0.5) * 180;
+        const scale = 1 + (0.5 - y/360); // simulate Z-axis
+        star.style.transform = `rotateX(${-y}deg) rotateY(${x}deg) scale(${scale})`;
+      });
+    </script>
+  </body>
+</html>
